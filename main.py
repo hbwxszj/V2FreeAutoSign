@@ -45,34 +45,42 @@ def parse_info():
     parser.add_argument("--username", type=str, help="账号")
     parser.add_argument("--password", type=str, help="密码")
     args = parser.parse_args()
+    return args.username, args.password
+
+
+def wrap_info(username: str, password: str):
     return json.dumps(
         {
-            "email": args.username,
-            "passwd": args.password,
+            "email": username,
+            "passwd": password,
             "code": "",
         },
         ensure_ascii=False,
     ).encode("utf-8")
 
 
-def record_info(string: str, logger: logging.Logger, stage: str) -> bool:
+def record_info(user: str, info: str, logger: logging.Logger, stage: str) -> bool:
     try:
-        logger.info(json.loads(string))
+        logger.info("{}->{}".format(masked_email(user), json.loads(info)))
         return True
     except Exception as e:
-        logger.info(f"{stage}阶段出现异常,请确认账号信息是否正确:{repr(e)}")
+        logger.info(f"{masked_email(user)}->{stage}阶段出现异常,请确认账号信息是否正确:{repr(e)}")
     return False
 
 
 def main():
     logger = get_logger()
-    data = parse_info()
+    username, password = parse_info()
     client = requests.Session()
-    response = client.post(Constants.login_url, data=data, headers=Constants.headers)
-    if not record_info(response.text, logger, stage="登录"):
+    response = client.post(
+        Constants.login_url,
+        data=wrap_info(username, password),
+        headers=Constants.headers,
+    )
+    if not record_info(username, response.text, logger, stage="登录"):
         return
     response = client.post(Constants.sign_url, headers=Constants.headers)
-    record_info(response.text, logger, stage="签到")
+    record_info(username, response.text, logger, stage="签到")
 
 
 if __name__ == "__main__":
