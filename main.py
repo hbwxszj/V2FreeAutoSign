@@ -69,7 +69,7 @@ def record_info(user: str, info: str, logger: logging.Logger, stage: str) -> boo
 
 
 def main():
-    logger = get_logger()
+    logger = get_logger(max_bytes=1024*1024)
     username, password = parse_info()
     client = requests.Session()
     response = client.post(
