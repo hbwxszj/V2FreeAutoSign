@@ -36,3 +36,5 @@
 2023-11-13 09:12:19,404	INFO	3*********@q*.com->{'msg': '获得了 60MB 流量.', 'unflowtraffic': 109674758144, 'traffic': '102.14GB', 'trafficInfo': {'todayUsedTraffic': '2.67MB', 'lastUsedTraffic': '14.82GB', 'unUsedTraffic': '87.32GB'}, 'ret': 1}
 2023-11-14 09:10:38,411	INFO	3*********@q*.com->{'ret': 0, 'msg': '邮箱或者密码错误'}
 2023-11-14 09:10:39,378	INFO	3*********@q*.com->签到阶段出现异常,请确认账号信息是否正确:JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2023-11-15 09:12:22,573	INFO	3*********@q*.com->{'ret': 0, 'msg': '邮箱或者密码错误'}
+2023-11-15 09:12:23,534	INFO	3*********@q*.com->签到阶段出现异常,请确认账号信息是否正确:JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
